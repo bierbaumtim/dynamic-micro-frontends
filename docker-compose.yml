@@ -1,0 +1,106 @@
+version: '3.4'
+
+networks:
+  dynamic-micro-frontend-backend:
+    driver: bridge
+  
+services:
+  api-gateway:
+    image: dmf-api-gateway:latest
+    build: 
+      context: krakend
+      dockerfile: Dockerfile
+    ports: 
+      - "26000:8080"
+    # volumes: 
+    #   - krakend_volume:/etc/krakend
+    networks:
+      - dynamic-micro-frontend-backend
+
+  authservice:
+    image: dmf-authservice:latest
+    depends_on: 
+      - "postgres_auth_image"
+    build:
+      context: auth-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5004:80"
+    environment:
+      DATABASE_URL: "postgres://auth_master:QzW56za&FKgbK_!@postgres_auth_image:5432/authdb"
+      JWT_SECRET: "32020538-01fc-473c-aa82-fd6913bdfdac"
+    networks:
+      - dynamic-micro-frontend-backend
+  postgres_auth_image:
+    image: postgres:latest
+    ports:
+      - "5432"
+    restart: always
+    volumes:
+      - auth_db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "auth_master"
+      POSTGRES_PASSWORD: "QzW56za&FKgbK_!"
+      POSTGRES_DB: "authdb"
+    networks:
+      - dynamic-micro-frontend-backend
+
+  todo_service:
+    image: dmf-todo-service:latest
+    depends_on: 
+      - "mongo_todo_image"
+    build:
+      context: todo-list-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5010:8080"
+    environment: 
+      FILES_DB_CONNECTION_STRING: "mongodb://todo_master:SrFK6zp8&kD7@mongo_todo_image:27017/"
+    networks:
+      - dynamic-micro-frontend-backend
+  mongo_todo_image:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - todo_db_volume:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "todo_master"
+      MONGO_INITDB_ROOT_PASSWORD: "SrFK6zp8&kD7"
+    networks:
+      - dynamic-micro-frontend-backend
+
+  frame_app_frontend:
+    image: dmf-frame-app-frontend:latest
+    build:
+      context: My-FrameApp
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - dynamic-micro-frontend-backend
+
+  calendar_frontend:
+    image: dmf-calendar-frontend:latest
+    build:
+      context: my-calendar
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    networks:
+      - dynamic-micro-frontend-backend
+
+  todo_frontend:
+    image: dmf-todo-frontend:latest
+    build:
+      context: my-todo-list
+      dockerfile: Dockerfile
+    ports:
+      - "3002:80"
+    networks:
+      - dynamic-micro-frontend-backend
+
+
+volumes:
+  krakend_volume:
+  auth_db_volume:
+  todo_db_volume:
