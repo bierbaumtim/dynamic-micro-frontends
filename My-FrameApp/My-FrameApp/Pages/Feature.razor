@@ -1,0 +1,8 @@
+﻿@page "/feature/{name}"
+
+@((MarkupString) $"<{name}></{name}>")
+
+@code {
+    [Parameter]
+    public String name { get; set; }
+}
