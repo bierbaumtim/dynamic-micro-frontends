@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{env, error::Error};
 
 use argon2::{
     password_hash::{
@@ -39,8 +39,9 @@ pub fn generate_jwt(user_id: Uuid) -> Result<String, Box<dyn Error>> {
         role: "user".to_string(),
         exp: (chrono::Utc::now() + chrono::Duration::days(1)).timestamp() as usize,
     };
+    let encoding_key = env::var("JWT_SECRET").expect("");
 
-    let jwt = jsonwebtoken::encode(&header, &claims, &EncodingKey::from_secret(b""))?;
+    let jwt = jsonwebtoken::encode(&header, &claims, &EncodingKey::from_secret(encoding_key.as_bytes()))?;
 
     Ok(jwt)
 }
