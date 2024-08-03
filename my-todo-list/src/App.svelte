@@ -23,7 +23,7 @@
   };
 </script>
 
-<main>
+<main id="my-todo-list-root">
   <div>
     <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
@@ -58,7 +58,8 @@
 </main>
 
 <style>
-  :root {
+  /* :root  */
+  #my-todo-list-root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -73,12 +74,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  a {
+  :global(a) {
     font-weight: 500;
     color: #646cff;
     text-decoration: inherit;
   }
-  a:hover {
+  :global(a:hover) {
     color: #535bf2;
   }
 
@@ -90,7 +91,7 @@
     min-height: 100vh;
   }
 
-  h1 {
+  :global(h1) {
     font-size: 3.2em;
     line-height: 1.1;
   }
@@ -106,7 +107,7 @@
     text-align: center;
   }
 
-  button {
+  :global(button) {
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
@@ -117,23 +118,24 @@
     cursor: pointer;
     transition: border-color 0.25s;
   }
-  button:hover {
+  :global(button:hover) {
     border-color: #646cff;
   }
-  button:focus,
-  button:focus-visible {
+  :global(button:focus),
+  :global(button:focus-visible) {
     outline: 4px auto -webkit-focus-ring-color;
   }
 
   @media (prefers-color-scheme: light) {
-    :root {
+    /* :root  */
+    #my-todo-list-root {
       color: #213547;
       background-color: #ffffff;
     }
-    a:hover {
+    :global(a:hover) {
       color: #747bff;
     }
-    button {
+    :global(button) {
       background-color: #f9f9f9;
     }
   }
