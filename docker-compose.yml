@@ -69,6 +69,7 @@ services:
     networks:
       - dynamic-micro-frontend-backend
 
+  # TODO: Add second gateway for frontend
   frame_app_frontend:
     image: dmf-frame-app-frontend:latest
     build:
@@ -96,6 +97,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3002:80"
+    networks:
+      - dynamic-micro-frontend-backend
+
+  nested_compontent:
+    image: dmf-nested-component:latest
+    build:
+      context: my-nested-component
+      dockerfile: Dockerfile
+    ports:
+      - "3003:80"
     networks:
       - dynamic-micro-frontend-backend
 
