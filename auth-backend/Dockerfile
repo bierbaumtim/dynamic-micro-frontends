@@ -5,7 +5,7 @@
 #
 # Use official rust image to for application build
 # ---------------------------------------------------
-FROM rust:1.80 as build
+FROM rust:1.80 AS build
 
 # create a new empty shell project
 RUN USER=root cargo new --bin auth-backend
