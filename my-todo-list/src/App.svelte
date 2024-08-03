@@ -4,6 +4,23 @@
   import svelteLogo from "./assets/svelte.svg";
   import viteLogo from "/vite.svg";
   import Counter from "./lib/Counter.svelte";
+
+  let showNestedComponent = false;
+  const loadNestedComponent = async () => {
+    showNestedComponent = !showNestedComponent;
+
+    if (
+      showNestedComponent &&
+      !window.customElements.get("my-nested-component")
+    ) {
+      var script = document.createElement("script");
+      script.id = `init_my-nested-component_script`;
+      script.type = "module";
+      script.src = "http://localhost:3003/my-nested-component.js";
+
+      document.head.appendChild(script);
+    }
+  };
 </script>
 
 <main>
@@ -30,6 +47,14 @@
   </p>
 
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
+
+  <div class="card">
+    <button on:click={loadNestedComponent}>Toggle nested component</button>
+  </div>
+
+  {#if showNestedComponent}
+    <my-nested-component />
+  {/if}
 </main>
 
 <style>

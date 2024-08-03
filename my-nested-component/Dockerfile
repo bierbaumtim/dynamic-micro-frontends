@@ -16,6 +16,6 @@ EXPOSE 80
 
 COPY --from=builder /app/dist/my-nested-component/3rdpartylicenses.txt /usr/share/nginx/html
 # COPY --from=builder /app/dist/my-nested-component/browser/index.html /usr/share/nginx/html
-COPY --from=builder /app/dist/my-nested-component/browser/main.js /usr/share/nginx/html
+COPY --from=builder /app/dist/my-nested-component/browser/main.js /usr/share/nginx/html/my-nested-component.js
 # COPY --from=builder /app/dist/my-nested-component/browser/styles.css /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
