@@ -5,8 +5,17 @@
   import viteLogo from "/vite.svg";
   import Counter from "./lib/Counter.svelte";
 
-  let showNestedComponent = false;
-  const loadNestedComponent = async () => {
+  let elementRef: HTMLElement;
+
+  let showNestedComponent: boolean = false;
+  const toggleNestedComponent = async () => {
+    const canClose = await canCloseNestedCompontent();
+
+    if (!canClose) {
+      alert("Can't close nested component");
+      return;
+    }
+
     showNestedComponent = !showNestedComponent;
 
     if (
@@ -21,9 +30,42 @@
       document.head.appendChild(script);
     }
   };
+
+  async function canCloseNestedCompontent(): Promise<boolean> {
+    return new Promise((resolve) => {
+      if (showNestedComponent) {
+        const event = new CustomEvent("canClose", {
+          bubbles: true,
+          cancelable: false,
+          detail: {
+            id: "event-uuid",
+          },
+        });
+
+        const handleEventResponse = (event: Event) => {
+          console.log("event", event);
+          if (event instanceof CustomEvent) {
+            if (event.detail.id === "event-uuid") {
+              window.removeEventListener(
+                "canCloseResponse",
+                handleEventResponse
+              );
+              resolve(event.detail.canClose);
+            }
+          }
+        };
+
+        window.addEventListener("canCloseResponse", handleEventResponse);
+
+        window.dispatchEvent(event);
+      } else {
+        resolve(true);
+      }
+    });
+  }
 </script>
 
-<main id="my-todo-list-root">
+<main id="my-todo-list-root" bind:this={elementRef}>
   <div>
     <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
@@ -49,7 +91,7 @@
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 
   <div class="card">
-    <button on:click={loadNestedComponent}>Toggle nested component</button>
+    <button on:click={toggleNestedComponent}>Toggle nested component</button>
   </div>
 
   {#if showNestedComponent}
