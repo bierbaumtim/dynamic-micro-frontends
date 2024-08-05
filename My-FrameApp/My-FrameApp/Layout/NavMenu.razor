@@ -1,7 +1,4 @@
-﻿@inject IJSRuntime JS
-@inject NavigationManager Navigation
-
-<div class="top-row ps-3 navbar navbar-dark">
+﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">My-FrameApp</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -28,20 +25,17 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="feature/my-calendar"
-                @onclick='() => LoadFeature("Calendar", "http://localhost:3001/my-calendar.js", "my-calendar")'>
+            <NavLink class="nav-link" href="feature/my-calendar">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Calendar
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="feature/my-todo-list"
-                @onclick='() => LoadFeature("ToDoList", "http://localhost:3002/my-todo-list.js", "my-todo-list")'>
+            <NavLink class="nav-link" href="feature/my-todo-list">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ToDo-List
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="feature/my-nested-component"
-                @onclick='() => LoadFeature("ToDoList", "http://localhost:3003/my-nested-component.js", "my-nested-component")'>
+            <NavLink class="nav-link" href="feature/my-nested-component">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Nested Component
             </NavLink>
         </div>
@@ -56,22 +50,5 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
-    }
-
-    private async Task LoadFeature(string feature, string url, string custom_element_name)
-    {
-        await JS.InvokeVoidAsync("loadFeature", url, custom_element_name);
-        // Navigation.NavigateTo($"feature/{feature}");
-
-        @* var module = await JS.InvokeAsync<IJSInProcessObjectReference?>("loadFeature", url, custom_element_name);
-
-if (module is null)
-{
-Console.WriteLine("Failed to load feature");
-}
-else
-{
-Console.WriteLine("Feature loaded");
-} *@
     }
 }

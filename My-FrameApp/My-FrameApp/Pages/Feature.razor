@@ -1,8 +1,69 @@
-﻿@page "/feature/{name}"
+﻿@inject IJSRuntime JS
+@page "/feature/{name}"
+@using System.Threading.Tasks;
 
-@((MarkupString)$"<{name}/>")
+@if (isLoading)
+{
+    <div>Loading...</div>
+}
+else if (loadingFailed)
+{
+    <div>Failed to load feature</div>
+}
+else
+{
+    @((MarkupString)$"<{name}/>")
+}
 
 @code {
     [Parameter]
     public String name { get; set; }
+
+    private bool isLoading = true;
+    private bool loadingFailed = false;
+    private Task? loadingTask = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var url = GetUrl();
+
+        if (url.Count() != 0)
+        {
+            loadingTask = JS.InvokeVoidAsync("loadFeature", url, name).AsTask().ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    isLoading = false;
+                    loadingFailed = false;
+                    StateHasChanged();
+                }
+                else
+                {
+                    isLoading = false;
+                    loadingFailed = true;
+                    StateHasChanged();
+                }
+            });
+        }
+        else
+        {
+            loadingTask = null;
+            isLoading = false;
+            StateHasChanged();
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private string GetUrl()
+    {
+        return name switch
+        {
+            "my-calendar" => "http://localhost:3001/my-calendar.js",
+            "my-todo-list" => "http://localhost:3002/my-todo-list.js",
+            "my-nested-component" => "http://localhost:3003/my-nested-component.js",
+            "my-home-page" => "http://localhost:3004/my-home-page.js",
+            _ => ""
+        };
+    }
 }
