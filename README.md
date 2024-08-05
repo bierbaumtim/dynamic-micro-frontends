@@ -141,9 +141,9 @@ The current focus is to get the foundation running. Each frontend serves the gen
 ### Frontend Frameworks
 
 - Blazor (Serves Root Page with Navigation and stuff)
-- React (Home Page)
 - Vue (Calendar)
 - Svelte (ToDo List)
+- Angular (Generic nested component and intercomponent communication)
 
 ### Deployment
 
