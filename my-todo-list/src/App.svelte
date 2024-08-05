@@ -43,7 +43,6 @@
         });
 
         const handleEventResponse = (event: Event) => {
-          console.log("event", event);
           if (event instanceof CustomEvent) {
             if (event.detail.id === "event-uuid") {
               window.removeEventListener(

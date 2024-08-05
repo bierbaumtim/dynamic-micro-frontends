@@ -1,0 +1,150 @@
+{
+  "version": 3,
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "output_encoding": "json",
+  "name": "DynamicFrontendApi",
+  "port": 8080,
+  "endpoints": [
+    {
+      "endpoint": "/api/v1/auth/register",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://authservice:80"],
+          "url_pattern": "/api/v1/auth/register",
+          "encoding": "no-op",
+          "method": "POST"
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/auth/login",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://authservice:80"],
+          "url_pattern": "/api/v1/auth/login",
+          "encoding": "no-op",
+          "method": "GET"
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/auth/validate",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://authservice:80"],
+          "url_pattern": "/api/v1/auth/validate",
+          "encoding": "no-op",
+          "method": "GET"
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/auth/refresh",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://authservice:80"],
+          "url_pattern": "/api/v1/auth/refresh",
+          "encoding": "no-op",
+          "method": "GET"
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/documents/{collection}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://universal_database_service:80"],
+          "url_pattern": "/api/v1/documents/{collection}",
+          "encoding": "no-op",
+          "method": "GET",
+          "extra_config": {}
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/documents/{collection}/{id}",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://universal_database_service:80"],
+          "url_pattern": "/api/v1/documents/{collection}/{id}",
+          "encoding": "no-op",
+          "method": "GET",
+          "extra_config": {}
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/documents/{collection}",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://universal_database_service:80"],
+          "url_pattern": "/api/v1/documents/{collection}",
+          "encoding": "no-op",
+          "method": "POST",
+          "extra_config": {}
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/documents/{collection}/{id}",
+      "method": "PUT",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://universal_database_service:80"],
+          "url_pattern": "/api/v1/documents/{collection}/{id}",
+          "encoding": "no-op",
+          "method": "PUT",
+          "extra_config": {}
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/api/v1/documents/{collection}/{id}",
+      "method": "DELETE",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://universal_database_service:80"],
+          "url_pattern": "/api/v1/documents/{collection}/{id}",
+          "encoding": "no-op",
+          "method": "DELETE",
+          "extra_config": {}
+        }
+      ],
+      "headers_to_pass": ["*"],
+      "extra_config": {}
+    }
+  ]
+}
