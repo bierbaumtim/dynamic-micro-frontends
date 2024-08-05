@@ -110,6 +110,16 @@ services:
     networks:
       - dynamic-micro-frontend-backend
 
+  home-page:
+    image: dmf-home-page:latest
+    build:
+      context: my-home-page
+      dockerfile: Dockerfile
+    ports:
+      - "3004:80"
+    networks:
+      - dynamic-micro-frontend-backend
+
 
 volumes:
   krakend_volume:
