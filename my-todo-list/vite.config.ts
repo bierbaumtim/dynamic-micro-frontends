@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
-import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -40,12 +39,13 @@ export default defineConfig({
 //     }),
 //   ],
 //   build: {
-//     sourcemap: true,
+//     // sourcemap: true,
 //     target: 'modules',
 //     lib: {
-//       entry: 'src/main.ts',
-//       name: '<<name>>',
-//       fileName: 'components',
+//       entry: 'src/main.wc.ts',
+//       // name: '<<name>>',
+//       name: 'MyTodoListComponent',
+//       fileName: 'my-todo-list',
 //     },
 //   },
 // })
